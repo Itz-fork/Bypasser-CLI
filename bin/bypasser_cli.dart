@@ -3,16 +3,28 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:colorize/colorize.dart' as colors;
 
-
 // Function to validate urls
 validateUrl(String url) async {
-  return Uri.parse(url).host == '' ? false : true;
+  return Uri.parse(url).host == "" ? false : true;
 }
 
 // Raise errors
-raiseErr() async {
-  colors.color("\nOops, Something went wrong!", front: colors.Styles.RED);
+raiseErr({String emsg = ""}) async {
+  colors.color(emsg == "" ? "\nOops, Something went wrong!" : "\n$emsg",
+      front: colors.Styles.RED);
   exit(1);
+}
+
+// Function to check internet connection
+checkConnection() async {
+  try {
+    final result = await InternetAddress.lookup('example.com');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      return true;
+    }
+  } on SocketException catch (_) {
+    await raiseErr(emsg: "No internet connection!");
+  }
 }
 
 // Sends post request to bypass.vip api
@@ -27,13 +39,15 @@ bypass(String url) async {
       await raiseErr();
     }
     colors.color("\nBypass Successfull ✅,", isBold: true, isItalic: true);
-    print(bypU);
+    print("Url: $bypU");
   } else {
-      await raiseErr();
+    await raiseErr();
   }
 }
 
 void main(List<String> args) async {
+  // Checks if the device is connected to internet
+  await checkConnection();
   // Checks if an url is passed as an argument
   if (args.isNotEmpty && await validateUrl(args[0])) {
     await bypass(args[0]);

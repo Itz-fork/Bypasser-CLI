@@ -8,7 +8,7 @@ Simple CLI tool for [bypass.vip](https://bypass.vip/) API
     - Go to [releases tab](https://github.com/Itz-fork/Bypasser-CLI/releases)
     - Find the build and download it
 
-- Build it
+- Or build it
     - Clone the git repo
     ```bash
     git clone https://github.com/Itz-fork/Bypasser-CLI.git
@@ -43,7 +43,7 @@ List of supported links:
 
 - adf.ly (all of their domains)
 
-- exe.io / exey.io / exee.io / exe.app / eio.io
+- ~~exe.io / exey.io / exee.io / exe.app / eio.io~~
 
 - ouo.io / ouo.press
 
